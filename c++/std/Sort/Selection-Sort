@@ -1,0 +1,17 @@
+void selectionSort(int a[],int n){
+  for (size_t i = 0; i < n-1; i++) {
+    int mn=a[i];
+    int imn=i;
+    for (size_t j = i+1; j < n; j++) {
+      if(mn>a[j]){
+        mn=a[j];
+        imn=j;
+      }
+    }
+    if(imn!=i){
+      int t=a[i];
+            a[i]=a[imn];
+            a[imn]=t;
+    }
+  }
+}
