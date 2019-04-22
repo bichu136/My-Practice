@@ -1,0 +1,42 @@
+#include<stack>
+using namespace std;
+void partition( int a[], int l, int r,int &k)
+{
+	int x = r;
+	int i = l;
+	while(i<x){
+		while(a[x]>a[i]) i++;
+		if(i<x){
+			int t=a[i];
+			a[i]=a[x-1];
+			a[x-1]=a[x];
+			a[x]=t;
+			x--;
+		}
+	}
+	k=x;
+}
+
+void quickSort( int a[], int n)
+{
+	stack<int> Sl;
+	stack<int> Sr;
+	Sl.push( 0 ); Sr.push( n - 1 );
+	int l;
+	int r;
+	int k;
+	do
+	{
+		l = Sl.top(); Sl.pop();
+		r = Sr.top(); Sr.pop();
+		partition( a, l, r,k);
+		if ( l < k - 1 )
+		{
+			Sl.push(l); Sr.push(k - 1 );
+		}
+		if ( k + 1 < r )
+		{
+			Sl.push( k + 1 ); Sr.push( r );
+		}
+	} while ( !Sl.empty() );
+}
