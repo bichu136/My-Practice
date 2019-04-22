@@ -1,0 +1,31 @@
+template<class T>
+void radixSort(T *a,int n){
+  T k=1;
+  T* t1=new T[n];
+  T* t0=new T[n];
+  while(k>0){
+    int x=0;
+    int y=0;
+    for (int i = 0; i < n; i++){
+      if(a[i]&k){
+          t1[x]=a[i];
+        x++;
+      }
+      else {
+        t0[y]=a[i];
+        y++;
+      }
+    }
+    x--;y--;
+    for (int i = 0; i < n; i++) {
+      if(x>=0){
+        a[n-i-1]=t1[x];
+        x--;
+      }else{
+        a[n-i-1]=t0[y];
+        y--;
+      }
+    }
+    k=k<<1;
+  }
+}
