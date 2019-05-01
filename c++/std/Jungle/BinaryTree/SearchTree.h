@@ -1,4 +1,4 @@
-#include"BTree.h"
+#include"BinaryTree.h"
 using namespace std;
 class SearchTree:public BinaryTree<int>{
     void rotateRight(){
