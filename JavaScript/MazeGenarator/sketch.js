@@ -27,21 +27,21 @@ function drawMaze(){
         fill(0,0,255)
         rect(i*height,j*width,height,width)
       }
-      if(grids[i][j].walls["left"]){
+      if(grids[i][j].walls["up"]){
         stroke(255,0,0)
-        line (i*height,j*width,(i+1)*height,j*width)
+        line (i*width,j*height,(i+1)*width,j*height)
       }
       if(grids[i][j].walls["right"]){
         stroke(255,0,0)
-        line ((i+1)*height,(j+1)*width,(i+1)*height,j*width)
+        line ((i+1)*width,(j+1)*height,(i+1)*width,j*height)
       }
       if(grids[i][j].walls["down"]){
         stroke(255,0,0)
-        line ((i+1)*height,(j+1)*width,i*height,(j+1)*width)
+        line ((i+1)*width,(j+1)*height,i*width,(j+1)*height)
       }
-      if(grids[i][j].walls["up"]){
+      if(grids[i][j].walls["left"]){
         stroke(255,0,0)
-        line (i*height,(j+1)*width,i*height,j*width)
+        line (i*width,(j+1)*height,i*width,j*height)
       }
 
     }
@@ -57,10 +57,10 @@ function check_colision(checkgrid){
   return grids[checkgrid[0]][checkgrid[1]].visited;
 }
 function can_go(checkgrid){
-  up = [checkgrid[0]-1,checkgrid[1]]
-  down = [checkgrid[0]+1,checkgrid[1]]
-  left = [checkgrid[0],checkgrid[1]-1]
-  right = [checkgrid[0],checkgrid[1]+1]
+  up = [checkgrid[0],checkgrid[1]-1]
+  down = [checkgrid[0],checkgrid[1]+1]
+  left = [checkgrid[0]-1,checkgrid[1]]
+  right = [checkgrid[0]+1,checkgrid[1]]
   direction_can = []
   if (check_colision(up)==false)
   {
@@ -84,16 +84,16 @@ function goto(checkgrid,goto){
       next = [checkgrid[0],checkgrid[1]]
       switch(goto){
         case "up":
-          next[0]-=1
+          next[1]-=1
           break;
         case "down":
-          next[0]+=1
+          next[1]+=1
           break;
         case "left":
-            next[1]-=1
+            next[0]-=1
           break;
         case "right":
-          next[1]+=1
+          next[0]+=1
           break;
       }
   return next;
@@ -137,7 +137,7 @@ function draw(){
     writer.write('\n')
     for(var i = 0;i<30;i++){
       for (var j = 0; j < 30; j++) {
-        writer.write([grids[i][j].walls["left"],grids[i][j].walls["right"],grids[i][j].walls["up"],grids[i][j].walls["down"]])
+        writer.write([grids[i][j].walls["up"],grids[i][j].walls["down"],grids[i][j].walls["left"],grids[i][j].walls["right"]])
         writer.write('\n')
       }
     }
