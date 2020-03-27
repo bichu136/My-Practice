@@ -1,5 +1,7 @@
 let i= 0
 let j =0
+let radio;
+
 function setup(){
 
   createCanvas(300,300)
@@ -17,6 +19,14 @@ function setup(){
     }
   }
   background(0)
+}
+function mouseClicked()
+{
+   mX = parseInt(mouseX)
+   mY = parseInt(mouseY)
+   i = floor(mX/width)
+   j = floor(mY/height)
+   console.log(i,j)
 }
 function drawGrid(i,j){
   if(grids[i][j].visited){
@@ -116,17 +126,16 @@ function reverseDir(dir){
       break;
   }
 }
-function draw(){
 
-  //console.log(i,j,[grids[i][j].walls["up"],grids[i][j].walls["down"],grids[i][j].walls["left"],grids[i][j].walls["right"]])
+function draw()
+{
   drawMaze()
+  //drawGoal()
+  //drawCurrent()
+  //if (haveGoal)
+  //{
+  //    ChangeCurrent()
+  //}
   frameRate(60);
-  // j+=1
-  // if (j == 30){
-  //   i+=1
-  //   j = 0
-  //   if(i == 29){
-  //     noLoop()
-  //   }
-  // }
+
 }
