@@ -1,7 +1,11 @@
 let i= 0
 let j =0
 let radio;
-
+let current = [];
+let goal = [];
+let haveGoal = false;
+let haveCurrent = false;
+let finding = false
 function setup(){
 
   createCanvas(300,300)
@@ -12,22 +16,42 @@ function setup(){
   grids = []
   current=[15,15];
   backtrack = []
+
   for (var i = 0; i < 30; i++) {
     grids.push([])
     for (var j = 0; j < 30; j++) {
       grids[i].push(new Grid(maze[i*30+j]))
     }
   }
-  background(0)
+  //background(0)
 }
 function mouseClicked()
 {
+  if(finding){
+    return
+
+  }
    mX = parseInt(mouseX)
    mY = parseInt(mouseY)
    i = floor(mX/width)
    j = floor(mY/height)
-   console.log(i,j)
+   if (haveCurrent)
+  {
+    if (haveGoal)
+    {
+        haveCurrent = false
+        haveGoal = false
+    }
+      goal = [i,j]
+      haveGoal = true
+  }
+  else
+  {
+      current = [i,j]
+      haveCurrent = true
+  }
 }
+
 function drawGrid(i,j){
   if(grids[i][j].visited){
     noStroke()
@@ -126,12 +150,35 @@ function reverseDir(dir){
       break;
   }
 }
+function drawGoal()
+{
+  if (haveGoal)
+  {
+    noStroke()
+    fill(255,255,0)
+    ellipse((goal[0]*width+(width/2)),(goal[1]*height+(height/2)),width-4,height-4)
+  }
 
+}
+function drawCurrent()
+{
+  if (haveCurrent)
+  {
+    noStroke()
+    fill(0,0,255)
+    ellipse((current[0]*width+width/2),(current[1]*height+(height/2)),width-4,height-4)
+  }
+}
 function draw()
 {
+  background(0)
   drawMaze()
-  //drawGoal()
-  //drawCurrent()
+  drawGoal()
+  drawCurrent()
+  if (finding)
+  {
+      //do the function
+  }
   //if (haveGoal)
   //{
   //    ChangeCurrent()
