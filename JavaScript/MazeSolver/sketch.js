@@ -1,14 +1,9 @@
 let i= 0
 let j =0
-let radio;
-let current = [];
-let goal = [];
-let haveGoal = false;
-let haveCurrent = false;
-let finding = false
+
 function setup(){
 
-  createCanvas(300,300)
+  createCanvas(500,500)
   angleMode(DEGREES)
   directions = ["up","down","left","right"]
   width = 10;
@@ -23,13 +18,22 @@ function setup(){
       grids[i].push(new Grid(maze[i*30+j]))
     }
   }
-  //background(0)
+  background(0)
+
+}
+
+
+
+function findingAlgo()
+{
+
+  GreedySearch()
+  //AstarSearch()
 }
 function mouseClicked()
 {
   if(finding){
     return
-
   }
    mX = parseInt(mouseX)
    mY = parseInt(mouseY)
@@ -44,10 +48,13 @@ function mouseClicked()
     }
       goal = [i,j]
       haveGoal = true
+      finding = true
+
   }
   else
   {
       current = [i,j]
+      open.push(current)
       haveCurrent = true
   }
 }
@@ -59,19 +66,19 @@ function drawGrid(i,j){
     rect(i*height,j*width,height,width)
   }
   if(grids[i][j].walls["up"]){
-    stroke(255,0,0)
+    stroke(255,150,125)
     line (i*width,j*height,(i+1)*width,j*height)
   }
   if(grids[i][j].walls["right"]){
-    stroke(255,0,0)
+    stroke(255,150,125)
     line ((i+1)*width,(j+1)*height,(i+1)*width,j*height)
   }
   if(grids[i][j].walls["down"]){
-    stroke(255,0,0)
+    stroke(255,150,125)
     line ((i+1)*width,(j+1)*height,i*width,(j+1)*height)
   }
   if(grids[i][j].walls["left"]){
-    stroke(255,0,0)
+    stroke(255,150,125)
     line (i*width,(j+1)*height,i*width,j*height)
   }
 
@@ -120,16 +127,16 @@ function goto(checkgrid,goto){
       next = [checkgrid[0],checkgrid[1]]
       switch(goto){
         case "up":
-          next[0]-=1
+          next[1]-=1
           break;
         case "down":
-          next[0]+=1
+          next[1]+=1
           break;
         case "left":
-            next[1]-=1
+            next[0]-=1
           break;
         case "right":
-          next[1]+=1
+          next[0]+=1
           break;
       }
   return next;
@@ -165,19 +172,20 @@ function drawCurrent()
   if (haveCurrent)
   {
     noStroke()
-    fill(0,0,255)
+    fill(255,0,0)
     ellipse((current[0]*width+width/2),(current[1]*height+(height/2)),width-4,height-4)
   }
 }
 function draw()
 {
-  background(0)
+  fill(0)
+  rect(0,0,300,300)
   drawMaze()
   drawGoal()
   drawCurrent()
   if (finding)
   {
-      //do the function
+    findingAlgo()
   }
   //if (haveGoal)
   //{
