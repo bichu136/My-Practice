@@ -9,9 +9,7 @@ function setup(){
   width = 10;
   height= 10;
   grids = []
-  current=[15,15];
   backtrack = []
-
   for (var i = 0; i < 30; i++) {
     grids.push([])
     for (var j = 0; j < 30; j++) {
@@ -26,7 +24,6 @@ function setup(){
 
 function findingAlgo()
 {
-
   GreedySearch()
   //AstarSearch()
 }
@@ -46,23 +43,32 @@ function mouseClicked()
         haveCurrent = false
         haveGoal = false
     }
-      goal = [i,j]
+      goal = {x:i,y:j}
       haveGoal = true
       finding = true
 
   }
   else
   {
-      current = [i,j]
+      current = {x:i,y:j}
       open.push(current)
       haveCurrent = true
   }
 }
 
 function drawGrid(i,j){
+
   if(grids[i][j].visited){
     noStroke()
     fill(0,0,255)
+    rect(i*height,j*width,height,width)
+  }
+  a = {x:i,y:j}
+  console.log("open:",open)
+  if (open.includes(a))
+  {
+    noStroke()
+    fill(0,125,0)
     rect(i*height,j*width,height,width)
   }
   if(grids[i][j].walls["up"]){
@@ -91,19 +97,19 @@ function drawMaze(){
   }
 }
 function check_colision(checkgrid){
-  if(checkgrid[0]<0 ||checkgrid[0]>=30){
+  if(checkgrid.x<0 ||checkgrid.x>=30){
     return true;
   }
-  if(checkgrid[1]<0 ||checkgrid[1]>=30){
+  if(checkgrid.y<0 ||checkgrid.y>=30){
     return true;
   }
-  return grids[checkgrid[0]][checkgrid[1]].visited;
+  return grids[checkgrid.x][checkgrid.y].visited;
 }
 function can_go(checkgrid){
-  up = [checkgrid[0]-1,checkgrid[1]]
-  down = [checkgrid[0]+1,checkgrid[1]]
-  left = [checkgrid[0],checkgrid[1]-1]
-  right = [checkgrid[0],checkgrid[1]+1]
+  up = {x:checkgrid.x-1,y:checkgrid.y}
+  down = {x:checkgrid.x+1,y:checkgrid.y}
+  left = {x:checkgrid.x,y:checkgrid.y-1}
+  right = {x:checkgrid.x,y:checkgrid.y+1}
   direction_can = []
   if (check_colision(up)==false)
   {
@@ -124,19 +130,19 @@ function can_go(checkgrid){
   return direction_can
 }
 function goto(checkgrid,goto){
-      next = [checkgrid[0],checkgrid[1]]
+      next = {x:checkgrid.x,y:checkgrid.y}
       switch(goto){
         case "up":
-          next[1]-=1
+          next.y-=1
           break;
         case "down":
-          next[1]+=1
+          next.y+=1
           break;
         case "left":
-            next[0]-=1
+            next.x-=1
           break;
         case "right":
-          next[0]+=1
+          next.x+=1
           break;
       }
   return next;
@@ -163,7 +169,7 @@ function drawGoal()
   {
     noStroke()
     fill(255,255,0)
-    ellipse((goal[0]*width+(width/2)),(goal[1]*height+(height/2)),width-4,height-4)
+    ellipse((goal.x*width+(width/2)),(goal.y*height+(height/2)),width-4,height-4)
   }
 
 }
@@ -173,7 +179,7 @@ function drawCurrent()
   {
     noStroke()
     fill(255,0,0)
-    ellipse((current[0]*width+width/2),(current[1]*height+(height/2)),width-4,height-4)
+    ellipse((current.x*width+width/2),(current.y*height+(height/2)),width-4,height-4)
   }
 }
 function draw()
