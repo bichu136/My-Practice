@@ -5042,9 +5042,10 @@ let drawing = [
   { x: -73.31673575860373, y: -7.553891527027265 },
   { x: -74.2779609610822, y: -8.41540401982963 }
 ];
+let a =[]
 function setup() {
   createCanvas(2000,2000);
-  const skip = 8;
+  const skip =1;
   for (let i = 0; i < drawing.length; i += skip) {
     x.push(drawing[i].x);
     y.push(drawing[i].y);
@@ -5052,8 +5053,9 @@ function setup() {
   fourierX = dft(x);
   fourierY = dft(y);
 
-  fourierX.sort((a, b) => b.amp - a.amp);
-  fourierY.sort((a, b) => b.amp - a.amp);
+  //fourierX.sort((a, b) => b.amp - a.amp);
+  //fourierY.sort((a, b) => b.amp - a.amp);
+
 }
 
 function epiCycles(x, y, rotation, fourier) {
@@ -5077,7 +5079,12 @@ function epiCycles(x, y, rotation, fourier) {
 
 function draw() {
   background(0);
-
+  for (let i = 0; i < drawing.length; i +=1) {
+    rx = round(drawing[i].x)
+    ry = round(drawing[i].y)
+    stroke(255)
+    point(rx+width/2 + 100,ry+height / 2 + 100)
+  }
   let vx = epiCycles(width / 2 + 100, 100, 0, fourierX);
   let vy = epiCycles(100, height / 2 + 100, HALF_PI, fourierY);
   let v = createVector(vx.x, vy.y);
@@ -5095,10 +5102,6 @@ function draw() {
   const dt = TWO_PI / fourierY.length;
   time += dt;
 
-  if (time > TWO_PI) {
-    time = 0;
-    path = [];
-  }
 
   // if (wave.length > 250) {
   //   wave.pop();

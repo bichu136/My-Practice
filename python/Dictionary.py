@@ -6,14 +6,15 @@ MyDict= dict()
 t = f.readline().strip()
 while(t!=""):
     MyDict[t] = False
-    t = f.readline().strip()
-r=0
+    t = f.readline()
+    r=0
 k =0
 f.close()
 #open file and split words
 f = open(input,encoding='UTF-8')
 t = f.read()
 words = [x.upper() for x in t.split()]
+print(words)
 print(len(words))
 #check if a word is in a Dictionary or not
 for word in words:
