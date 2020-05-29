@@ -29,9 +29,6 @@ def coloring(node):
         if c.color == 0:
             c.self_color()
             stack = c.neightbors + stack
-        else:
-            break
-
 b = [int(x) for x in input().split(' ')]
 n_vectors = b[1]
 n_points = b[0]
@@ -46,4 +43,4 @@ for i in range(n_vectors):
     points[x2].add_neightbor(points[x1])
 coloring(points[0])
 for point in points:
-    print(point.color)
+    print("{}: {}".format(points.index(point),point.color))

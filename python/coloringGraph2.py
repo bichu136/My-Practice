@@ -44,4 +44,4 @@ for i in range(n_points):
                 points[i].add_neightbor(points[j])
 coloring(points[0])
 for point in points:
-    print(point.color)
+    print("{}: {}".format(points.index(point),point.color))
