@@ -19,7 +19,7 @@ def EuclideanDistance(x,y):
     s = 0
     for i in range(3):
         s+= (x[i]-y[i])*(x[i]-y[i])
-    return np.sqrt(s)
+    return s
 
 def InitializeMeans(k,cMin,cMax,img_arr):
     #Initialize means to random number between the max and means
@@ -30,14 +30,6 @@ def InitializeMeans(k,cMin,cMax,img_arr):
         for j in range(number_of_channel):
             mean[j] = random.uniform(cMin[j],cMax[j])
     return means
-def updateMean(n,mean,pixel):
-    for i in range(len(pixel)):
-        m = mean[i]
-        m = (m * (n-1)+pixel[i])/float(n)
-        mean[i] = m
-    return mean
-
-
 def Classify(means, pixel):
     # Classify item to the mean with minimum distance
     minimum = sys.maxsize;
@@ -54,7 +46,7 @@ def Classify(means, pixel):
     return index;
 
 def FindCluster(means,img_arr,k):
-    clusters = []
+    clusters = [[]*k]
     for pixel in img_arr:
         index = Classify(means,pixel)
         clusters[index].append(pixel)
@@ -86,7 +78,7 @@ def CalculateMeans(k, img_arr, maxIterations=100000):
             index = Classify(means, pixel);
 
             clusterSizes[index] += 1;
-            means[index] = updateMean(clusterSizes[index], means[index], pixel);
+            means[index] = updateMean(clusterSizes[index], means[index]);
 
             # Item changed cluster
             if (index != belongsTo[i]):
@@ -102,13 +94,14 @@ def CalculateMeans(k, img_arr, maxIterations=100000):
         for i in range(len(mean)):
             mean[i]=int(mean[i])
     return means,clusterSizes;
-
 def compress_img(img_arr,means):
     img_arr_compressed = []
+    current_progress=0
     for i in range(len(img_arr)):
         index = Classify(means,img_arr[i])
         img_arr_compressed.append(index)
     return np.array(img_arr_compressed,dtype=np.uint8)
+
 def decompress(img_arr_compress,means):
     output = []
     for pixel in img_arr_compress:
@@ -116,15 +109,15 @@ def decompress(img_arr_compress,means):
     return np.array(output,dtype=np.uint8)
 def main():
     img = cv.imread("3.jpg")
-    file = open("log.txt",mode="w+")
+    # file = open("log.txt",mode="w+")
     cv.imshow('img',img)
     cv.waitKey(0)
     cv.destroyAllWindows()
     start = time.time()
     img_arr = np.reshape(img,(img.shape[0]*img.shape[1],img.shape[2]))
-    k = 10
+    k = 16
     means,clusterSizes = CalculateMeans(k,img_arr)
-    # means = [[176, 253, 60], [231, 119, 186], [228, 43, 146], [77, 89, 150], [88, 81, 106], [250, 169, 69], [15, 210, 242], [226, 236, 247], [140, 141, 163], [169, 188, 230]]
+    means = [[107,97,128],[227,216,222],[91,79,103],[153,139,176],[189,189,230],[127,115,154],[72,59,77],[148,157,222],[169,158,193],[136,125,173],[77,61,219],[22,18,35],[21,5,113],[124,128,214],[45,25,187],[171,174,226]]
     img_arr_compress = compress_img(img_arr,means)
     img_output_arr = decompress(img_arr_compress,means)
     img_output = img_output_arr.reshape((img.shape[0],img.shape[1],img.shape[2]))
@@ -135,23 +128,23 @@ def main():
     cv.destroyAllWindows()
     cv.imwrite("2_com.jpg",img_output)
     # log the means
-    file.write("means:\n")
-
-    for i in range(len(means)):
-        s = ""
-        for channel in means[i]:
-            s += str(channel)+","
-        file.write(s+"\n")
+    # file.write("means:\n")
+    #
+    # for i in range(len(means)):
+    #     s = ""
+    #     for channel in means[i]:
+    #         s += str(channel)+","
+    #     file.write(s+"\n")
     #log the img_arr_compress
-    file.write("img_arr_compress:\n")
-    s = ""
-    for i in range(len(img_arr_compress)):
-        s += str(img_arr_compress[i])+" "
-    file.write(s+"\n")
-    file.write("clusterSizes::\n")
-    s = ""
-    for i in range(len(clusterSizes)):
-        s += str(clusterSizes[i])+" "
-    file.write(s + "\n")
-    file.close()
+    # file.write("img_arr_compress:\n")
+    # s = ""
+    # for i in range(len(img_arr_compress)):
+    #     s += str(img_arr_compress[i])+" "
+    # file.write(s+"\n")
+    # file.write("clusterSizes::\n")
+    # s = ""
+    # for i in range(len(clusterSizes)):
+    #     s += str(clusterSizes[i])+" "
+    # file.write(s + "\n")
+    # file.close()
 main()
