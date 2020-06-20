@@ -1,30 +1,31 @@
 import sys
+import flashtext
 input = sys.argv[1]
 #create a Dictionary
-f = open("syllables.txt",encoding='UTF-8')
+f = open("keywords.txt",encoding='UTF-8')
 MyDict= dict()
 t = f.readline().strip()
+keywordProcessor = flashtext.KeywordProcessor()
+keywordProcessor.add_keywords_from_dict(MyDict)
 while(t!=""):
-    MyDict[t] = False
-    t = f.readline()
-    r=0
-k =0
+    keywordProcessor.add_keyword(t)
+    t = f.readline().strip()
+
+
+print(keywordProcessor.get_all_keywords())
 f.close()
 #open file and split words
 f = open(input,encoding='UTF-8')
 t = f.read()
-words = [x.upper() for x in t.split()]
-print(words)
-print(len(words))
-#check if a word is in a Dictionary or not
-for word in words:
-    if word in MyDict.keys():
-        #MyDict.update({word:True})
-        MyDict[word] = True
-#count the number of word appear in Dictionary
-for val in MyDict.values():
-    if val:
-        r+=1
-result = ((r/len(MyDict.values()))*100)
-print(result)
+task = t.split("^")
+a=0
+while a<len(task):
+    r = 0
+    key_found = keywordProcessor.extract_keywords(task[a].lower(),span_info=True)
+    print(key_found)
+    print(task[a])
+    for key,begin,end in key_found:
+        print(task[a].encode("UTF-8")[begin],begin,end)
+
+    a+=1
 f.close()
