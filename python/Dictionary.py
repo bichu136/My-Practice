@@ -25,7 +25,7 @@ while a<len(task):
     print(key_found)
     print(task[a])
     for key,begin,end in key_found:
-        print(task[a].encode("UTF-8")[begin],begin,end)
+        print(task[a][begin:end+4])
 
     a+=1
 f.close()

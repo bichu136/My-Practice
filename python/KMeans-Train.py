@@ -185,19 +185,22 @@ def main():
 
     for i in range(100):
         np.random.shuffle(img_arr)
-        img_arr_t = img_arr[0:4194304]
-        img =img_arr_t.reshape((2048,2048,3))
+        img_arr_t = img_arr[0:81]
+        img =img_arr_t.reshape((9,9,3))
         start = time.time()
-        k = 64
+        k = 4
+        print(img_arr_t)
         means = initialize_means(k)
         print(time.time()-start2)
         print(img_arr.shape)
         means,compressed_img = calculatte_means(means,img,k)
         print(time.time()-start2)
         print(time.time()-start)
+        print(compressed_img)
+        print(means)
     # means = [[176, 24, 226], [229, 164, 51], [231, 29, 43], [227, 115, 224], [25, 34, 230], [227, 174, 218], [95, 35, 164], [27, 126, 28], [43, 227, 227], [85, 22, 225], [142, 96, 157], [29, 74, 76], [29, 155, 152], [118, 162, 142], [35, 154, 88], [217, 91, 160], [163, 220, 92], [95, 209, 87], [115, 234, 218], [107, 231, 145], [149, 224, 30], [228, 230, 208], [72, 153, 226], [175, 211, 230], [130, 48, 221], [82, 230, 31], [229, 158, 141], [178, 89, 223], [148, 103, 31], [230, 36, 214], [221, 105, 27], [132, 31, 30], [29, 228, 165], [165, 31, 160], [31, 33, 174], [151, 81, 96], [119, 183, 217], [84, 29, 50], [221, 224, 33], [82, 109, 175], [227, 222, 114], [32, 225, 97], [22, 176, 221], [84, 88, 31], [26, 211, 31], [136, 128, 227], [171, 24, 89], [30, 35, 27], [224, 91, 92], [73, 190, 167], [76, 82, 227], [81, 100, 108], [116, 144, 78], [168, 164, 31], [32, 24, 109], [104, 32, 108], [179, 146, 103], [185, 44, 28], [28, 90, 140], [24, 107, 217], [175, 220, 160], [88, 164, 28], [226, 31, 131], [175, 152, 181]]
     # img_compress = compress_img(img,means,k)
-    # img_output = decompress(compressed_img,means,k)
+    img_output = decompress(compressed_img,means,k)
     # print(img_output)
     # stop = time.time()
     # print(stop-start)

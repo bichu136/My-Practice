@@ -9,11 +9,11 @@ tam giác
 tam giác nhọn
 tam giác vuông
 tam giác cân
-tâm giác đều
+tam giác đều
 tam giác tù
 tam giác vuông cân
-tia
-điểm
+tia 
+điểm 
 góc
 góc tù
 góc bẹt
