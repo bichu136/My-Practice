@@ -1,0 +1,7 @@
+P E
+E T + E
+E T
+T F * T
+T F
+F ( E )
+F id

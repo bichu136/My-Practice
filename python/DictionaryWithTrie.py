@@ -13,8 +13,8 @@ class Trienode():
     def insert(self,key):
         self.children[key] = Trienode(key,0)
     def query(self):
-        r = value
-        for child in children:
+        r = self.value
+        for child in self.children:
             r +=child.query()
         return r
     def search(self,str,index = 0):
@@ -53,7 +53,7 @@ def intoTrie(str,root):
         if(c == (len(str)-1)):
             current.isword=True
 
-source = "keywords.txt"
+source = "syllables.txt"
 f =  open(source, encoding='utf-8')
 t = f. readline().strip()
 arr = []
