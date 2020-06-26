@@ -18,22 +18,8 @@ góc
 góc tù
 góc bẹt
 góc nhọn
-góc bù nhau
-góc phụ nhau
-đường cao
-đường phân giác
 đường thẳng
-đường tiếp tuyến
-trung điểm
-trung trực 
-trung tuyến
-tia phân giác
-đường phân giác
-đường tròn 
-tâm
-sao cho
-các
-độ dài
-bằng
-=
+đường tròn
 mặt phẳng
+đoạn thẳng
+
