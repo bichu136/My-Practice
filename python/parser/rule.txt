@@ -1,7 +1,7 @@
 P E
-E T + E
+E E + T
 E T
-T F * T
+T T * F
 T F
 F ( E )
 F id

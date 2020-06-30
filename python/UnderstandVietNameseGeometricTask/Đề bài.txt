@@ -1,0 +1,62 @@
+^
+Trên cùng một nửa mặt phẳng bờ chứa tia Ox vẽ hai tia Oy và Oz sao cho góc xOy bằng 600, góc xOz bằng 1200.
+
+a) Tính góc yOz?
+
+b) Tia Oy có phải là tia phân giác của góc xOz không?
+
+c) Gọi Ot là tia đối của tia Oy. Tính góc kề bù với góc yOz?
+^
+Cho xOy và yOz là hai góc kề bù, Gọi Ot và Ot' lần lượt là tia phân giác của góc xOy và góc yOz. Tính góc tOt'.
+^
+Cho góc bẹt xOy. Vẽ tia Oz sao cho góc xOz = 700
+
+Tính góc zOy?
+
+Trên nửa mặt phẳng bờ chứa tia Oz vẽ tia Ot sao cho góc xOt bằng 1400. Chứng tỏ tia Oz là tia phân giác của góc xOt?
+
+Vẽ tia Om là tia đối của tia Oz. Tính góc yOm.
+^
+Cho xOy và yOz là hai góc kề bù, Gọi Ot và Ot’ lần lượt là tia phân giác của góc xOy và góc yOz. Tính góc tOt’.
+^
+Cho góc bẹt xOy. Vẽ tia Oz sao cho góc xOz = 70 0
+Tính góc zOy?
+Trên nửa mặt phẳng bờ chứa tia Oz vẽ tia Ot sao cho góc xOt bằng 140 0 . Chứng tỏ tia
+là tia phân giác của góc xOt?
+Vẽ tia Om là tia đối của tia Oz. Tính góc yOm.
+^
+Cho góc bẹt xOy. Vẽ tia Oz thỏa mãn zOy = 2/3zOx. Gọi Om và On lần lượt là các tia phân giác của zOx; zOy
+Tính zOx; zOy
+^
+Cho hai góc bù nhau, trong đó có một góc bằng 35 độ . Số đo góc còn lại sẽ là:
+^
+Cho hai góc A, B phụ nhau và B-A=20 độ. Số đo góc A bằng bao nhiêu?
+^
+Cho hai góc kề bù xOy và yOy’, trong đó xOy =110 0 ;Oz là tia phân giác của góc yOy’ (Hình vẽ). Số đo góc yOz bằng
+^
+Trên cùng một nửa mặt phẳng bờ chứa tia Ox, vẽ tia Oy và Ot sao cho xOy = 30 0 ;xOt = 70 0
+a. Tính góc yOt. Tia Oy có phải là tia phân giác của góc xOt không?
+^
+Vẽ năm điểm M, N, P, Q, R sao cho ba điểm M, N, P thẳng hàng, ba điểm N, P, Q thẳng
+hàng, còn ba điểm N, P, R không thẳng hàng
+Kẻ các đường thẳng đi qua các cặp điểm. Có bao nhiêu đường thẳng, kể tên các đường thẳng đó?
+Có bao nhiêu đoạn thẳng? kể tên các đoạn thẳng đó.
+Kể tên các tia gốc P. Trong các tia đó chỉ ra hai tia đối nhau ? Hai tia trùng nhau?
+^
+Trên tia Ox lấy điểm A. trên tia đối của tia Ox lấy điểm B sao cho OA = OB = 3cm . Trên tia AB lấy điểm M, trên tia BA lấy điểm N sao cho AM = BN = 1cm
+Chứng tỏ O là trung điểm của AB và MN
+^
+Cho đoạn thẳng AB = 6cm và O là trung điểm của AB. Gọi M là điểm thuộc đoạn AB.
+Tính độ dài các đoạn AM, BM biết OM = 1cm
+^
+Trên một nửa mặt phẳng bờ chứa tia OA vẽ tia OB sao choAOB = 35 o , vẽ tia OC sao cho AOC = 70 o
+Tia OB có phải là tia phân giác của góc AOC không ?
+Vẽ tia OB’ là tia đối của tia OB . Tính số đo góc kề bù với góc AOB
+^
+vẽ tam giác ABC biết A = 60 o AB = 2cm; AC = 4 cm
+Gọi D là điểm thuộc AC sao cho CD = 3cm tính AD
+Biết ADB = 30 o tính CBD.
+^
+Cho hai góc kề bù xOy và yOz . kẻ tia phân giác Ou của góc xOy và tia phân giác Ov của góc yOz.
+Hỏi góc uOv là góc gì ? vì sao?
+

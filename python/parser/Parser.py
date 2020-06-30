@@ -77,6 +77,14 @@ cur = inp[0]
 
 
 def chooseStep(stk, cur, root):
+    i=0
+    j=0
+    root_cur = root
+    stk_cur = stk[-1]
+    if stk_cur in root_cur.children.keys():
+        root_cur = root_cur.children[stk_cur]
+        if cur in root_cur.children.keys():
+            return "shift",None,i,j
     for i in range(len(stk)):
         root_cur = root
         stk_cur = stk[i]
@@ -92,7 +100,7 @@ def chooseStep(stk, cur, root):
         #     continue
         # checking grammar in
         if (j>=len(stk)-1):
-            if cur in root_cur.children.keys():
+            if stk_cur in root_cur.children.keys():
                return "shift",None,i,j
             else:
                 if root_cur.goals is not None:
@@ -127,5 +135,3 @@ while(1):
         else:
             cur=None
         print("shift")
-
-
