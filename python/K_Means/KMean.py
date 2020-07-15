@@ -122,7 +122,7 @@ def compress_img(img,means,k):
     h = [x.shape[0]]
     number_of_collumn = np.array(w,dtype=np.int32)
     out = np.zeros((h[0],w[0]),dtype=np.int32)
-    classify_model(cuda.InOut(x),cuda.InOut(number_of_collumn),cuda.InOut(np_means),cuda.InOut(out),cuda.InOut(_k),block=(1,1,1),grid = (h[0],w[0]))
+    classify_model(cuda.InOut(x),cuda.InOut(number_of_collumn),cuda.InOut(np_means),cuda.InOut(out),cuda.InOut(_k),block=(1,1),grid = (h[0],w[0]))
     return out
 
 def decompress(img_compress,means,k):
