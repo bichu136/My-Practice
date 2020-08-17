@@ -3,3 +3,5 @@
 */Hosting
 Pictures
 *.exe
+*.vscode
+*__pycache__
