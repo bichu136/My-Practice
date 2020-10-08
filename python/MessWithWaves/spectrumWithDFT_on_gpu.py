@@ -12,7 +12,7 @@ import time
 
 
 # open file
-file_path = "/home/bichu136/Downloads/audio.mp3"
+file_path = "%USER%/Desktop/audio.mp3"
 normalized = False
 a = pydub.AudioSegment.from_mp3(file_path)
 y = np.array(a.get_array_of_samples())

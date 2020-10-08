@@ -1,88 +1,89 @@
 import scipy as sci
-import pydub
 import numpy as np
-import scipy.io.wavfile as ostr
 import matplotlib.pyplot as plt
 import math
-import pycuda.driver as cuda
-import pycuda.autoinit
-from pycuda.compiler import SourceModule
+import wave
+import audio2numpy
 import time
-import pyaudio
-import pydub.playback
-# set global variable
-CHUNK = 1024
-# open file
-file_path = "/home/bichu136/Downloads/audio.mp3"
-audio_segment = pydub.AudioSegment.from_mp3(file_path)
+import matplotlib.pyplot as plt
+import librosa
+import librosa.display
 
-# create interface to PortAudio
-port_interface = pyaudio.PyAudio()
-# # Open a .Stream object to write the WAV file to
-# # 'output = True' indicates that the sound will be played rather than recorded
-stream = port_interface.open(format = port_interface.get_format_from_width(audio_segment.sample_width),
-                channels = audio_segment.channels,
-                rate = audio_segment.frame_rate,
-                output = True)
-                # stream_callback=callback)
-# # stream.start_stream()
-# i=0
-# data = audio_segment.get_frame(i)
-# i+=1
-# while data != '':
-#     stream.write(data)
-#     data = audio_segment.get_frame(i)
-#     i+=1
-# stream.stop_stream()
-# stream.close()
-# port_interface.terminate()
+from scipy import signal
+file_path = "audio.mp3"
+audio_segment,frame_rate = audio2numpy.audio_from_file(file_path)
+audio_segment = np.rot90(audio_segment)
+left = audio_segment[0]
+right = audio_segment[1]
+def computeMFCC(samples, sampleRate, nFFT=512, hopLength=256, nMFCC=40):
+    mfcc = librosa.feature.mfcc(y=samples, sr=sampleRate, n_fft=nFFT, hop_length=hopLength, n_mfcc=nMFCC)
+    # Let's add on the first and second deltas (what is this really doing?)
+    #mfcc = librosa.feature.delta(mfcc, order=2)
+    return mfcc
 
-y = np.array(audio_segment.get_array_of_samples())
-if audio_segment.channels==2:
-    y = y.reshape((-1,2))
-frame_rate = audio_segment.frame_rate
-data = y
-data = np.rot90(data)
-print(data.shape)
-print(frame_rate)
-left = np.array(data[0])
-right = np.array(data[1])
+def plotMFCC(plotTitle, sampleRate, mfcc, figWidth=14, figHeight=4):
+    fig = plt.figure(figsize=(figWidth, figHeight))
+    librosa.display.specshow(mfcc, sr=sampleRate, x_axis='time', y_axis='mel')
+    plt.colorbar(pad=0.1)
+    plt.title('Mel-frequency cepstral coefficients (MFCC) of ' + plotTitle)
+    plt.tight_layout()
+    plt.show()
+    return None
+def plotRawWave(plotTitle, sampleRate, samples, figWidth=14, figHeight=4):
+    plt.figure(figsize=(figWidth, figHeight))
+    plt.plot(np.linspace(0, sampleRate, len(samples)), samples)
+    plt.title('Raw sound wave of ' + plotTitle)
+    plt.ylabel('Amplitude')
+    plt.xlabel('Time [sec]')
+    plt.show()
+    return None
+def plotLogSpectrogram(plotTitle, freqs, times, spectrogram, figWidth=14, figHeight=4):
+    fig = plt.figure(figsize=(figWidth, figHeight))
+    plt.imshow(spectrogram.T, aspect='auto', origin='lower', cmap="inferno",
+               extent=[times.min(), times.max(), freqs.min(), freqs.max()])
+    plt.colorbar(pad=0.01)
+    plt.title('Spectrogram of ' + plotTitle)
+    plt.ylabel('Frequency [Hz]')
+    plt.xlabel('Time [sec]')
+    fig.tight_layout()
+    plt.show()
+    return None
+def plotLogMelSpectrogram(plotTitle, sampleRate, logMelSpectrum, figWidth=14, figHeight=4):
+    fig = plt.figure(figsize=(figWidth, figHeight))
+    librosa.display.specshow(logMelSpectrum, sr=sampleRate, x_axis='time', y_axis='mel')
+    plt.title('Mel log-frequency power spectrogram of ' + plotTitle)
+    plt.colorbar(pad=0.01, format='%+02.0f dB')
+    plt.tight_layout()  
+    plt.show()
+    return None
+def computeLogSpectrogram(audio, sampleRate, windowSize=20, stepSize=10, epsilon=1e-10):
+    nperseg = int(round(windowSize * sampleRate / 1000))
+    noverlap = int(round(stepSize * sampleRate / 1000))
+    freqs, times, spec = signal.spectrogram(audio,
+                                            fs=sampleRate,
+                                            window='hann',
+                                            nperseg=nperseg,
+                                            noverlap=noverlap,
+                                            detrend=False)
+    return freqs, times, np.log(spec.T.astype(np.float32) + epsilon)
+def computeLogMelSpectrogram(samples, sampleRate, nMels=128):
+    melSpectrum = librosa.feature.melspectrogram(samples, sr=sampleRate, n_mels=nMels)
+    # Convert to dB, which is a log scale. Use peak power as reference.
+    logMelSpectrogram = librosa.power_to_db(melSpectrum, ref=np.max)
+    return logMelSpectrogram
+def showWavefile(filename):
+    #sampleRate, samples = wavfile.read(filename)
+    samples, sampleRate = librosa.load(filename)
+    plotRawWave(filename, sampleRate, samples)
 
+    freqs, times, logSpectrogram = computeLogSpectrogram(samples, sampleRate)
+    plotLogSpectrogram(filename, freqs, times, logSpectrogram)
 
-fig, ax = plt.subplots(1, figsize=(15, 7))
-ax.set_title('spectrum')
-ax.set_xlabel('freq')
-ax.set_ylabel('amplitude')
-ax.set_xbound(25,1000)
-ax.set_ylim(5000000)
+    logMelSpectrogram = computeLogMelSpectrogram(samples, sampleRate)
+    plotLogMelSpectrogram(filename, sampleRate, logMelSpectrogram)
 
-line, =ax.plot(np.zeros((1024,)))
-# plt.setp(ax)
-plt.show(block=False)
-print(audio_segment.frame_count(180000))
-i=0
-data = audio_segment.get_frame(i)
-i+=1
-while data != '':
-    stream.write(data)
-    data = audio_segment.get_frame(i)
-    if i%1024==0:
-        ax.set_xbound(25, 1000)
-        a = np.abs(np.fft.fft(left[i-1024:i]))
-        line.set_ydata(a)
-        fig.canvas.draw()
-        fig.canvas.flush_events()
-    i+=1
-# i=0
-# data = audio_segment.get_frame(i)
-# i+=1
-# while data != '':
-#     stream.write(data)
-#     data = audio_segment.get_frame(i)
-#     i+=1
-# stream.stop_stream()
-# stream.close()
-# port_interface.terminate()
+    mfcc = computeMFCC(samples, sampleRate)
+    plotMFCC(filename, sampleRate, mfcc)
 
-# stream.close()
-# port_interface.terminate()
+    return sampleRate, samples, logSpectrogram, logMelSpectrogram, mfcc
+showWavefile("audio.mp3")
