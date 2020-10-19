@@ -57,6 +57,17 @@ class IR:
 		return res
 		
 lucene.initVM()
+inform_retrieve = IR('index')
+inform_retrieve.openIndex()
+inform_retrieve.index('Cranfield/Cranfield')
+querries = open("Cranfield/TEST/query.txt").read().splitlines()
+for querry in querries:
+	a = querry.split("\t")
+	res = inform_retrieve.search(a[1])
+	for doc in res:
+		print(len(doc[0]),doc[1])
+
+
 	
 
 
