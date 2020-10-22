@@ -17,14 +17,12 @@ def read_data_y(filename):
             r.append([float(i) for i in line.split(",")])
             line = file.readline()
     return np.array(r,dtype=np.float64)
-inp = read_data('input.csv')
 n = read_data('n.txt')
-nlgn = read_data('nlogn.txt')
-lgn = read_data('lgn.txt')
-nn = read_data('nn.txt')
-sqrt_n = read_data('sqrt_n.txt')
+nlgn = np.transpose(np.vstack(((n[:,0])*np.log2(n[:,0]),n[:,1])))
+lgn = np.transpose(np.vstack((np.log2(n[:,0]),n[:,1])))
+nn = np.transpose(np.vstack(((n[:,0])*(n[:,0]),n[:,1])))
+sqrt_n = np.transpose(np.vstack((np.sqrt(n[:,0]),n[:,1])))
 y = read_data_y('y.txt')
-
 def model_prediction(x,y):
     r = np.dot(np.linalg.inv(np.dot(x.transpose(),x)),np.dot(x.transpose(),y))
     return r
