@@ -22,7 +22,7 @@ nlgn = np.transpose(np.vstack(((n[:,0])*np.log2(n[:,0]),n[:,1])))
 lgn = np.transpose(np.vstack((np.log2(n[:,0]),n[:,1])))
 nn = np.transpose(np.vstack(((n[:,0])*(n[:,0]),n[:,1])))
 sqrt_n = np.transpose(np.vstack((np.sqrt(n[:,0]),n[:,1])))
-y = read_data_y('y.txt')
+y = read_data_y('time.txt')
 def model_prediction(x,y):
     r = np.dot(np.linalg.inv(np.dot(x.transpose(),x)),np.dot(x.transpose(),y))
     return r
