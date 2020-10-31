@@ -21,12 +21,12 @@ def read_data_y(filename):
             line = file.readline()
     return np.array(r,dtype=np.float64)
 # Load the diabetes dataset
-n = read_data('n.txt')
+n = read_data('./linear_regression/n_mergesearch..txt')
 nlgn = np.transpose(np.vstack(((n[:,0])*np.log2(n[:,0]),n[:,1])))
 lgn = np.transpose(np.vstack((np.log2(n[:,0]),n[:,1])))
 nn = np.transpose(np.vstack(((n[:,0])*(n[:,0]),n[:,1])))
 sqrt_n = np.transpose(np.vstack((np.sqrt(n[:,0]),n[:,1])))
-y = read_data_y('time.txt')
+y = read_data_y('./linear_regression/y_mergesearch..txt')
 def result(x,y,str):
     # Create linear regression object
     regr = linear_model.LinearRegression()
@@ -38,7 +38,7 @@ def result(x,y,str):
     y_pred = regr.predict(n)
 
     # The mean squared error
-    print('Mean squared error of '+ str +': %.2f'
+    print('Mean squared error of '+ str +': %.6f'
         % mean_squared_error(y, y_pred))
 result(n,y,"n")
 result(nlgn,y,"nlgn")
