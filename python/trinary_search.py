@@ -33,4 +33,3 @@ test=[int(i) for i in input().split()]
 
 for i in test:
     print(trinary_search(k,i))
-    print("-----------------")
