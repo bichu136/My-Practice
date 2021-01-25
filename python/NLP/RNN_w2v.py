@@ -7,8 +7,6 @@ from nltk.corpus import treebank
 from sklearn.model_selection import train_test_split
 word_tokenizer = Tokenizer() 
 
-
-
 data = treebank.tagged_sents()
 X = []
 Y = []

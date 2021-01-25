@@ -48,6 +48,7 @@ def StemSentence(sentence):
         stem_sentence.append(" ")
     return "".join(stem_sentence)
 
+
 def get_words_from_text(text):
     text = StemSentence(text)
     stop_words = set(stopwords.words('english'))
@@ -60,6 +61,13 @@ def get_words_from_text(text):
     ]
 
     return words
+def n_gram(str,n):
+    return [str[i:i+n] for i in range(len(str)-(n-1))]
+def get_token_from_str(str):
+    processed_str = preprocess_text(str)
+
+    tokens = n_gram(processed_str,2)
+    return tokens
 
 def build_inverted_index(docs_path):
     arr = dict()
@@ -67,7 +75,7 @@ def build_inverted_index(docs_path):
     for doc_file in os.listdir(docs_path):
         filename = os.path.join(docs_path, doc_file)
         text = get_text_from_file(filename)
-        words = get_words_from_text(text)
+        words = get_token_from_str(text)
 
         for word in words:
             if word not in arr.keys():
@@ -119,7 +127,7 @@ def get_vector_length_of_docs(tf_idf_index):
     return docs_length
 def get_relevant_ranking_for_query(query,tf_idf_index,docs_length,docs_path):
     # lấy từ trong query 
-    q_words = get_words_from_text(query)
+    q_words = get_token_from_str(query)
 
     # đếm từ 
     q_word_with_count = dict()
