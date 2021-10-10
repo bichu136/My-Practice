@@ -11,12 +11,24 @@ class TreeNode():
 i = 0
 arr = []
 t = input()
-while (t!="0"):
+while (t!="3"):
     k = t.split()
-    if k[0]=="1":
+    if k[0]=="0":
         arr.append(int(k[1]))
-    if k[0]==="2":
+    if k[0]==="1":
         arr.insert(0,int(k[1]))
+    if k[0]=="2":
+        i = 0
+        a = int(k[1])
+        b = int(k[2])
+        while i<len(arr):
+            if arr[i]==a:
+                break
+             i+=1
+        if i+1>len(arr):
+            arr.insert(0,b)
+        else:
+            arr.insert(i+1,b)
     t = input()
 inp = arr[i]
 i+=1
